@@ -255,7 +255,7 @@
 </script>
 
 <script type="text/html" data-help-name="wled2">
-  <p>A node for controlling lights via WLED.</p>
+  <p>A node for controlling lights via WLED with segment support</p>
 
   <h3>Inputs</h3>
     <dl class="message-properties">
@@ -263,6 +263,10 @@
             <span class="property-type">json</span>
         </dt>
         <dd>The WLED settings to set on the WLED device. These override any values specified in the node's properties.</dd>
+        <dt>payload.segRange
+          <span class="property-type">number</span>
+        </td>
+          <dd>The segment range to apply the settings to. <code>0</code> to <code>segRange</code> </dd>
     </dl>
 
     <ol class="node-ports">

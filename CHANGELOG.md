@@ -1,4 +1,7 @@
 # Changelog
+## v2.5.1 - 2021-01-03
+
+- added segment support and a debug output option
 
 ## v2.4.1 - 2020-12-15
 

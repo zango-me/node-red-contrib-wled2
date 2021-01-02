@@ -95,33 +95,33 @@ module.exports = function (RED) {
         });
     });
     function setState(msg) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y;
         return __awaiter(this, void 0, void 0, function () {
-            var payload, delay, targetState, requestedState, e_1, on, state;
-            return __generator(this, function (_r) {
-                switch (_r.label) {
+            var payload, delay, targetState, requestedState, e_1, on, state, i;
+            return __generator(this, function (_z) {
+                switch (_z.label) {
                     case 0:
                         // Any setting of state stops any prior delayed attempt to set the state to solid
                         clearTimeout(this.solidTimer);
                         payload = msg.payload;
                         delay = (_b = (_a = payload === null || payload === void 0 ? void 0 : payload.delay) !== null && _a !== void 0 ? _a : Number(this.config.delay)) !== null && _b !== void 0 ? _b : 0;
                         requestedState = (_d = (_c = payload === null || payload === void 0 ? void 0 : payload.state) !== null && _c !== void 0 ? _c : this.config.state) !== null && _d !== void 0 ? _d : "on";
-                        _r.label = 1;
+                        _z.label = 1;
                     case 1:
-                        _r.trys.push([1, 5, , 6]);
+                        _z.trys.push([1, 5, , 6]);
                         if (!(requestedState.toLowerCase() === "toggle")) return [3 /*break*/, 3];
                         return [4 /*yield*/, this.wled.getCurrentOnState().catch(function (e) {
                                 throw Error("Unable to obtain current device on state to perform toggle: " + e);
                             })];
                     case 2:
-                        targetState = !(_r.sent());
+                        targetState = !(_z.sent());
                         return [3 /*break*/, 4];
                     case 3:
                         targetState = requestedState.toLowerCase() === "on";
-                        _r.label = 4;
+                        _z.label = 4;
                     case 4: return [3 /*break*/, 6];
                     case 5:
-                        e_1 = _r.sent();
+                        e_1 = _z.sent();
                         // This means the current on state couldn't be retrieved so just give up.
                         this.error(e_1);
                         return [2 /*return*/];
@@ -147,19 +147,41 @@ module.exports = function (RED) {
                                 state.seg = payload.seg;
                             }
                             else {
-                                state.seg = [{
-                                        id: (_g = payload === null || payload === void 0 ? void 0 : payload.segmentId) !== null && _g !== void 0 ? _g : Number(this.config.segmentId),
-                                        on: (_h = payload === null || payload === void 0 ? void 0 : payload.state) !== null && _h !== void 0 ? _h : true,
-                                        col: [
-                                            (_j = payload === null || payload === void 0 ? void 0 : payload.color1) !== null && _j !== void 0 ? _j : helpers.hexToRgb(this.config.color1),
-                                            (_k = payload === null || payload === void 0 ? void 0 : payload.color2) !== null && _k !== void 0 ? _k : helpers.hexToRgb(this.config.color2),
-                                            (_l = payload === null || payload === void 0 ? void 0 : payload.color3) !== null && _l !== void 0 ? _l : helpers.hexToRgb(this.config.color3),
-                                        ],
-                                        fx: (_m = payload === null || payload === void 0 ? void 0 : payload.effect) !== null && _m !== void 0 ? _m : Number(this.config.effect),
-                                        ix: (_o = payload === null || payload === void 0 ? void 0 : payload.effectIntensity) !== null && _o !== void 0 ? _o : Number(this.config.effectIntensity),
-                                        pal: (_p = payload === null || payload === void 0 ? void 0 : payload.palette) !== null && _p !== void 0 ? _p : Number(this.config.palette),
-                                        sx: (_q = payload === null || payload === void 0 ? void 0 : payload.effectSpeed) !== null && _q !== void 0 ? _q : Number(this.config.effectSpeed),
-                                    }];
+                                // if segment range is provided add multiple segmenent objects to the array with id: 0 to segRange
+                                // this will ignore SegmentId
+                                if (payload === null || payload === void 0 ? void 0 : payload.segRange) {
+                                    state.seg = [];
+                                    for (i = 0; i < payload.segRange; i++) {
+                                        state.seg.push({
+                                            id: i,
+                                            on: (_g = payload === null || payload === void 0 ? void 0 : payload.state) !== null && _g !== void 0 ? _g : true,
+                                            col: [
+                                                (_h = payload === null || payload === void 0 ? void 0 : payload.color1) !== null && _h !== void 0 ? _h : helpers.hexToRgb(this.config.color1),
+                                                (_j = payload === null || payload === void 0 ? void 0 : payload.color2) !== null && _j !== void 0 ? _j : helpers.hexToRgb(this.config.color2),
+                                                (_k = payload === null || payload === void 0 ? void 0 : payload.color3) !== null && _k !== void 0 ? _k : helpers.hexToRgb(this.config.color3),
+                                            ],
+                                            fx: (_l = payload === null || payload === void 0 ? void 0 : payload.effect) !== null && _l !== void 0 ? _l : Number(this.config.effect),
+                                            ix: (_m = payload === null || payload === void 0 ? void 0 : payload.effectIntensity) !== null && _m !== void 0 ? _m : Number(this.config.effectIntensity),
+                                            pal: (_o = payload === null || payload === void 0 ? void 0 : payload.palette) !== null && _o !== void 0 ? _o : Number(this.config.palette),
+                                            sx: (_p = payload === null || payload === void 0 ? void 0 : payload.effectSpeed) !== null && _p !== void 0 ? _p : Number(this.config.effectSpeed),
+                                        });
+                                    }
+                                }
+                                else {
+                                    state.seg = [{
+                                            id: (_q = payload === null || payload === void 0 ? void 0 : payload.segmentId) !== null && _q !== void 0 ? _q : Number(this.config.segmentId),
+                                            on: (_r = payload === null || payload === void 0 ? void 0 : payload.state) !== null && _r !== void 0 ? _r : true,
+                                            col: [
+                                                (_s = payload === null || payload === void 0 ? void 0 : payload.color1) !== null && _s !== void 0 ? _s : helpers.hexToRgb(this.config.color1),
+                                                (_t = payload === null || payload === void 0 ? void 0 : payload.color2) !== null && _t !== void 0 ? _t : helpers.hexToRgb(this.config.color2),
+                                                (_u = payload === null || payload === void 0 ? void 0 : payload.color3) !== null && _u !== void 0 ? _u : helpers.hexToRgb(this.config.color3),
+                                            ],
+                                            fx: (_v = payload === null || payload === void 0 ? void 0 : payload.effect) !== null && _v !== void 0 ? _v : Number(this.config.effect),
+                                            ix: (_w = payload === null || payload === void 0 ? void 0 : payload.effectIntensity) !== null && _w !== void 0 ? _w : Number(this.config.effectIntensity),
+                                            pal: (_x = payload === null || payload === void 0 ? void 0 : payload.palette) !== null && _x !== void 0 ? _x : Number(this.config.palette),
+                                            sx: (_y = payload === null || payload === void 0 ? void 0 : payload.effectSpeed) !== null && _y !== void 0 ? _y : Number(this.config.effectSpeed),
+                                        }];
+                                }
                             }
                         }
                         // debug: todo set flag in object for this?
@@ -174,7 +196,7 @@ module.exports = function (RED) {
                     case 7:
                         // On failures the node can just do nothing. Error state
                         // will get set automatically by an event fired from the WledDevice object.
-                        _r.sent();
+                        _z.sent();
                         // If a delay was requested flip to solid state after the specified number of seconds.
                         if (delay) {
                             this.solidTimer = setTimeout(setSolidState.bind(this), delay * 1000, targetState);

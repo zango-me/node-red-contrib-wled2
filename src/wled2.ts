@@ -111,19 +111,42 @@ export = (RED: Red): void => {
       if (payload?.seg) {
         state.seg = payload.seg;
       } else {
-        state.seg = [{
-          id: payload?.segmentId ?? Number(this.config.segmentId),
-          on: payload?.state ?? true,
-          col: [
-            payload?.color1 ?? helpers.hexToRgb(this.config.color1),
-            payload?.color2 ?? helpers.hexToRgb(this.config.color2),
-            payload?.color3 ?? helpers.hexToRgb(this.config.color3),
-          ],
-          fx: payload?.effect ?? Number(this.config.effect),
-          ix: payload?.effectIntensity ?? Number(this.config.effectIntensity),
-          pal: payload?.palette ?? Number(this.config.palette),
-          sx: payload?.effectSpeed ?? Number(this.config.effectSpeed),
-        } as IWledSegment] ;
+        // if segment range is provided add multiple segmenent objects to the array with id: 0 to segRange
+        // this will ignore SegmentId
+        if(payload?.segRange) {
+          state.seg = [];
+          for(let i=0; i < payload.segRange; i++) {
+            state.seg.push(
+              {
+                id: i,
+                on: payload?.state ?? true,
+                col: [
+                  payload?.color1 ?? helpers.hexToRgb(this.config.color1),
+                  payload?.color2 ?? helpers.hexToRgb(this.config.color2),
+                  payload?.color3 ?? helpers.hexToRgb(this.config.color3),
+                ],
+                fx: payload?.effect ?? Number(this.config.effect),
+                ix: payload?.effectIntensity ?? Number(this.config.effectIntensity),
+                pal: payload?.palette ?? Number(this.config.palette),
+                sx: payload?.effectSpeed ?? Number(this.config.effectSpeed),
+              } as IWledSegment
+            );
+          }
+        } else {
+          state.seg = [{
+            id: payload?.segmentId ?? Number(this.config.segmentId),
+            on: payload?.state ?? true,
+            col: [
+              payload?.color1 ?? helpers.hexToRgb(this.config.color1),
+              payload?.color2 ?? helpers.hexToRgb(this.config.color2),
+              payload?.color3 ?? helpers.hexToRgb(this.config.color3),
+            ],
+            fx: payload?.effect ?? Number(this.config.effect),
+            ix: payload?.effectIntensity ?? Number(this.config.effectIntensity),
+            pal: payload?.palette ?? Number(this.config.palette),
+            sx: payload?.effectSpeed ?? Number(this.config.effectSpeed),
+          } as IWledSegment] ;
+        }
       }
     }
 

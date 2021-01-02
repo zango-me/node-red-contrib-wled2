@@ -22,4 +22,5 @@ export default interface IWledNodeProperties extends NodeProperties {
   palette: number;
   preset?: number;
   seg?: IWledSegment[];
+  segRange?: number;
 }
