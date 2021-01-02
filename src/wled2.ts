@@ -153,8 +153,8 @@ export = (RED: Red): void => {
         on,
         seg: [
           {
-            fx: Number(this.config.segmentId),
-            id: 0,
+            id: Number(this.config.segmentId),
+            fx: 0,
           },
         ],
       })
