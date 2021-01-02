@@ -33,14 +33,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/danecreekphotography/node-red-contrib-wled2.git"
+    "url": "git+https://github.com/marc-gist/node-red-contrib-wled2.git"
   },
   "author": "Neil Enns",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/danecreekphotography/node-red-contrib-wled2/Issues"
+    "url": "https://github.com/marc-gist/node-red-contrib-wled2/Issues"
   },
-  "homepage": "https://github.com/danecreekphotography/node-red-contrib-wled2#readme",
+  "homepage": "https://github.com/marc-gist/node-red-contrib-wled2#readme",
   "dependencies": {
     "mdns-server": "^1.0.9",
     "node-fetch": "^2.6.1"
