@@ -98,9 +98,10 @@ export = (RED: Red): void => {
       on,
     } as IWledState;
 
-    // If a preset was set then that overrides everything else
+    // If a preset was set then that overrides everything else (include brightness tho)
     if (payload?.preset || this.config.preset) {
       state.ps = payload?.preset ?? Number(this.config.preset);
+      state.bri = payload?.brightness ?? Number(this.config.brightness);
     } else {
       state.bri = payload?.brightness ?? Number(this.config.brightness);
 
@@ -214,3 +215,4 @@ export = (RED: Red): void => {
     });
   }
 };
+
